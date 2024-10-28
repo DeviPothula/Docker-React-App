@@ -18,7 +18,7 @@ RUN npm run build
 
 #now we are using nginx to run our react app
 
-FROM nginx:alpine
+FROM nginx:latest
 
 # Copy the build output to Nginx's web directory
 COPY --from=build /app/build /usr/share/nginx/html
