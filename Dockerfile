@@ -16,11 +16,15 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Use a lightweight server to serve the static files
-RUN npm install -g serve
+#now we are using nginx to run our react app
 
-# Expose the port
-EXPOSE 3000
+FROM nginx:alpine
+
+# Copy the build output to Nginx's web directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose the port 80 for nginx server
+EXPOSE 80
 
 # Start the application
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["nginx", "-g", "daemon off;"]
